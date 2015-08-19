@@ -7,7 +7,7 @@
 
 mb_language('Japanese');
 
-$urls = explode("\n", file_get_contents('file.txt'));
+$urls = explode("\n", file_get_contents('wikia.txt'));
 
 function file_get_contents_curl($url){
     $ch = curl_init();
@@ -26,5 +26,9 @@ foreach($urls as $url) {
     preg_match('/<title>(.+)<\/title>/',$html,$matches);
     $title = $matches[1];
 
-    echo $url . ';' . $title . "\n";
+    // Cthulhu parsing, #likeaboss
+    preg_match('/<div class="tally"><em>(.*)<\/em>/',$html,$matches);
+    $number_of_pages = $matches[1];
+
+    echo $url . ';' . $title . ';' . $number_of_pages . "\n";
 }
